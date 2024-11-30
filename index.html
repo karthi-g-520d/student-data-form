@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h3>STUDENT FORM</h3>
+<section id="form-container">
+<center>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th><input type="text" id="name"></th>
+        </tr>
+        <tr>
+            <th>Age</th>
+            <th><input type="number" id="age"></th>
+        </tr>
+        <tr>
+            <th>Gender</th>
+            <th><input type="radio" id="male" name="gender">
+                <label for="male">Male</label>
+                
+                <input type="radio" id="female" name="gender">
+                <label for="female">Female</label>
+            </th>
+        </tr>
+        <tr>
+            <th>
+                Course
+            </th>
+            <th>
+                <select name="course" id="course">
+                <option disabled selected>select</option>
+                <option id="ME">ME</option>
+                <option id="CSE">CSE</option>
+                <option id="EEE">EEE</option>
+                <option id="ECE">ECE</option>
+                <option id="Civil">Civil</option>
+                <option id="IT">IT</option></select>
+            </th>
+        </tr>
+        <tr>
+            <th>
+                E-mail
+            </th>
+            <th>
+                <input type="text" id="mail" onkeypress="save()">
+            </th>
+        </tr>
+        <tr>
+            <th colspan="2">
+                <button type="submit" id="save-btn" onclick="save()">Save</button>
+            </th>
+        </tr>
+
+    </table>
+</center>
+</section>
+<section id="data">
+<center>
+    <table>
+        <tbody id="tableData">
+            <tr>
+                <th id="sno">ID</th>
+                <th id="data-name">Name</th>
+                <th id="data-age">Age</th>
+                <th id="data-gender">Gender</th>
+                <th id="data-course">Course</th>
+                <th id="data-mail">E-mail</th>
+                <th id="deleteItem">Delete</th>
+            </tr>
+        </tbody>
+    </table>
+</center>
+</section>
+</body>
+<script href="script.js">
+    var tableData = document.getElementById("tableData")
+
+    var id=1001
+    function save()
+    {
+        var name = document.getElementById("name")
+        var age = document.getElementById("age")
+        var gender = document.getElementsByName("gender");
+        var course = document.getElementById("course")
+        var mail = document.getElementById("mail")
+
+        age=Number(age.value)
+        //console.log(gender[0].value)
+        
+        // selection of gender
+        if(gender[0].checked)
+        {
+            gender="Male"
+        }
+        if(gender[1].checked)
+        {
+            gender="Female"
+        }
+        
+        if (name.value!="" && age!="" && course.value!="select" && mail.value!="" && ( gender==="Male" || gender=="Female" )  )
+        {
+            
+            //appending data
+            var tr =document.createElement("tr")
+            tr.innerHTML="<th>" + id + "</th>" + "<th>" + name.value + "</th>" + "<th>" + age + "</th>" +
+            "</th>" + "<th>" + gender + "</th>" + "<th>" + course.value + "</th>" + "<th>" + mail.value + "</th>" + "<th><button onclick='removerow(this)'>" + "X" + "</button></th>"
+            tableData.append(tr)
+
+            // sno increment
+            id = id+1
+
+            //clear values
+            var age = document.getElementById("age")
+            const radios = document.querySelectorAll('input[name="gender"]');
+            radios.forEach(radio => radio.checked = false);
+            name.value="", age.value="", course.value="", mail.value=""
+        }
+        else
+        {
+            alert('Please fill required field!');
+        }
+
+        
+    }
+
+    function removerow(button)
+    {
+        const row = button.parentElement.parentElement;
+        row.remove();
+    }
+</script>
+</html>
